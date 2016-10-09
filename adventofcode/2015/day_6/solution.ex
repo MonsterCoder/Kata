@@ -1,4 +1,20 @@
 defmodule Solution do
+  def run() do
+    "input.txt"
+    |> File.stream!
+    |> Stream.map(&String.strip/1)
+    |> Stream.map(&(String.split(&1," ")))
+    |> Enum.map(&debug/1)
+    |> Enum.reduce([], &parse_instruction/2)
+    |> Enum.count
+    |> inspect
+    |> IO.puts
+  end
+
+  def debug(x) do
+    IO.puts x
+    x
+  end
   def parse_instruction(["turn","on",from,"through", to], lights_on)  do
     grid(point(from), point(to)) ++ lights_on
     |> Enum.uniq

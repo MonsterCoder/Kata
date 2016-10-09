@@ -3,6 +3,10 @@ defmodule Solution do
     grid(point(from), point(to)) ++ lights_on
   end
 
+  def parse_instruction(["turn","off",from,"through",to], lights_on) do
+    lights_on -- grid(point(from), point(to))
+  end
+
   def grid([x,y], [k,v]) do
     for a <- x..k, b <- y..v, do: {a, b} 
   end

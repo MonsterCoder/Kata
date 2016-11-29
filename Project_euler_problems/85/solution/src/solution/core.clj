@@ -14,3 +14,5 @@
   )
 )
 
+(defn -main []
+  (println (rectCount 1999 1 )))

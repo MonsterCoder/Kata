@@ -16,24 +16,34 @@ defmodule Solution do
       |> String.replace("]", "|")
       |> String.split("|")
       |> Enum.map(&abba?/1)
-      |> parse
+      |> Stream.with_index
+      |> Enum.reduce([0,0],&check/2)
+      |> judge
+    end
+    defp check({x,idx}, [_,1]) do
+      [0,1]
     end
 
-    def parse([]) do
+    defp check({x,idx}, [a,0]) do
+      i = rem(idx, 2)
+      if i == 0 do
+       [rem(a+x,2), 0] 
+      else
+        [a, x]
+      end
+    end
+    defp judge([_,1]) do
       0
     end
 
-    def parse([a]) do
-      a
-    end
-    def parse([1,0 | _]) do
-       1
-    end
-    
-    def parse ([_,_ |tail]) do
-      parse(tail)
+    defp judge([0,_]) do
+      0
     end
 
+    defp judge([_, 0]) do
+      1
+    end
+    
     def abba?(<<a,b,b,a>>) when a != b do
       1
     end

@@ -3,7 +3,6 @@ ExUnit.start()
 defmodule Solution_test do
     use ExUnit.Case, async: true
     import Solution, only: ['abba?': 1, 'tls?': 1]  
-      
     test "1" do
           assert abba?("abba") == 1
     end
@@ -32,4 +31,14 @@ defmodule Solution_test do
     test "9 " do
       assert tls?("ioxxoj[asdfgh]zxcvbn") ==1
     end
+
+    test "10 " do
+      assert tls?("tivudfusgnewzshs[mausfjbgxmyibin]yponuityptavbhekrlg[qeyafuevtlqemtfa]owtdxadrwwbxbrkl[obfcyxbifipwhduubu]mjocivgvrcbrllso") ==0
+    end
+    test "11" do
+      assert tls?("ioxxoj[asdfgh]zxcvbn[xbddbyz]abcd") ==0
+    end  
+    test "12" do
+      assert tls?("ioyxoj[asdfgh]xabbay[xbdybyz]abcd") ==1
+    end  
 end

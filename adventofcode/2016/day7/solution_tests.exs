@@ -41,4 +41,22 @@ defmodule Solution_test do
     test "12" do
       assert tls?("ioyxoj[asdfgh]xabbay[xbdybyz]abcd") ==1
     end  
+    test "13" do
+      assert tls?("ioyxoj[asdfgh]xabbay[xbdybyz]abcd[fsssdxuuxsffssf]") ==0
+    end  
+    test "14" do
+      assert tls?("iuyxoj[asdfgh]xabbay[xbdybyz]abcd") ==1
+    end  
+    test "15" do
+      assert tls?("ioyxoj[asdfgh]xabbay[xbdybyz]abcd[fsssdxtuxsffssf]nnmmn") ==0
+    end  
+    test "16" do
+      assert tls?("ioyxoj[asdfgh]aabbay[xbdybyz]abcd[fsssdxtuxsffssf]nnmnn") ==0
+    end  
+    test "17" do
+      assert tls?("ioyxoj[asdfgh]xabbay") ==1
+    end  
+    test "18" do
+      assert tls?("ioyxoj[asdfgh]xabbay[xbdbyz]abcd[fsssdxtuxsfxxxxxxx]") ==1
+    end  
 end

@@ -1,5 +1,5 @@
 defmodule Solution do
-    @input "input.txt"
+    @input "input2.txt"
     def run do
       @input
       |> File.read!
@@ -8,6 +8,17 @@ defmodule Solution do
       |> Enum.map(&tls?/1)
       |> Enum.sum
       |> IO.puts
+    end
+    def debug(line) do
+      IO.puts line
+      line
+    end
+
+    def debug2(lst) do
+      lst
+      |> Enum.map(&IO.puts/1)
+      
+      lst
     end
 
     def tls?(str) do

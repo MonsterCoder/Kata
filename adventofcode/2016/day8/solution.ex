@@ -20,16 +20,37 @@ defmodule Solution do
         yn= String.split(y,"=")
         rotateRow(yn, count, g)
       end
-
-      def rotateRow([_,_,x], count,g) do
-        r = String.to_integer(x)
-        row = List.get(g, r)
-        1..count
-        |> Enum.reduce(row, &shiftR/1)
+      def parse(["rotate", "column", x, "by", count], g) do
+        xn= String.split(x,"=")
+        rotateColumn(xn, count, g)
       end
 
-      def shiftR([h | tail])  do
-        [tail | h]
+      def rotateRow([_,x], count,g) do
+        r = String.to_integer(x)
+        cnt = String.to_integer(count)
+        row = Enum.at(g, r)
+        shifted = 1..cnt
+        |> Enum.reduce(row, &shiftR/2)
+        
+        List.replace_at(g,r, shifted)
+      end
+
+      def rotateColumn([_,y], count,g) do
+        c = String.to_integer(y)
+        cnt = String.to_integer(count)
+        col = (for r <- 0..5, do: get({r, c}, g))
+        shifted = 1..cnt
+        |> Enum.reduce(col, &shiftR/2)
+
+        0..5
+       |> Enum.reduce(fn r ->  set({r,c}, Enum.at(shifted, r), g) end)
+      end
+
+
+      def shiftR(n, list)  do
+        [h |tail] = Enum.reverse(list)
+        tail++ [h]
+        |> Enum.reverse
       end
 
       def rect(op,g) do
@@ -42,14 +63,22 @@ defmodule Solution do
         
       end
 
-      
-
       def set({r,c}, g) do
+       set({r,c},1,g)
+      end 
+
+      def set({r,c},v, g) do
        u = g
        |> Enum.at(r)
-       |> List.replace_at(c,1)
+       |> List.replace_at(c,v)
 
        g
        |> List.replace_at(r,u)
       end     
+
+      def get({r,c}, g) do
+        g
+        |> Enum.at(r)
+        |> Enum.at(c)
+      end
 end

@@ -10,11 +10,32 @@ defmodule Solution do
               |> String.split("\n")
               |> Enum.map(&(&1 |> String.split))
               |> Enum.reduce(grid, &parse/2)
+              |> display
               |> Enum.map(&Enum.sum/1)
               |> Enum.sum
               |> IO.inspect
       end
+
+      def display(g) do
+        g
+        |> Enum.map(&line/1) 
+        
+        g
+      end
       
+      def line(l) do 
+        l
+        |> Enum.reduce("", &(draw(&1, &2)))
+        |> IO.puts
+      end
+      
+      def draw(1, acc) do
+        acc <> "*"
+      end
+
+      def draw(_, acc) do
+        acc <> " "
+      end
       def parse(["rect", op], g) do
         rect(op, g)
       end

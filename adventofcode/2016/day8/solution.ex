@@ -10,6 +10,9 @@ defmodule Solution do
               |> String.split("\n")
               |> Enum.map(&(&1 |> String.split))
               |> Enum.reduce(grid, &parse/2)
+              |> Enum.map(&Enum.sum/1)
+              |> Enum.sum
+              |> IO.inspect
       end
       
       def parse(["rect", op], g) do

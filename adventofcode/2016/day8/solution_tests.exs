@@ -24,4 +24,13 @@ defmodule Solution_test do
       [0,0,0,0]
     ]
   end
+
+  test "rotate row y=0 by 4" do
+    g = [
+      [1,0,1,0,0,0,0],
+      [0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0]
+    ]
+  end
 end

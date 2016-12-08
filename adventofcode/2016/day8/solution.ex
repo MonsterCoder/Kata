@@ -13,6 +13,23 @@ defmodule Solution do
       end
       
       def parse(["rect", op], g) do
+        rect(op, g)
+      end
+
+      def parse(["rotate", "row", y, "by", count], g) do
+        yn= String.split(y,"=")
+        rotateRow(yn, count, g)
+      end
+
+      def rotateRow([_,_,x], count,g) do
+        r = String.to_integer(x)
+        row = List.get(g, r)
+        1..count
+        |> Enum.reduce(row, &shiftR/1)
+      end
+
+      def shiftR([h | tail])  do
+        [tail | h]
       end
 
       def rect(op,g) do
@@ -24,6 +41,8 @@ defmodule Solution do
         |> Enum.reduce(g, &set/2) 
         
       end
+
+      
 
       def set({r,c}, g) do
        u = g

@@ -35,11 +35,10 @@ defmodule Solution do
     {r, rest} =tail
     |> String.split_at(String.to_integer(x))
   
-
     rep = 0..String.to_integer(y)-1
     |> Enum.reduce("", fn (i, rr) -> r <> rr end)
 
 
-    acc <> decomp(rep <> rest)
+    decomp(rep <> rest, acc)
   end
 end

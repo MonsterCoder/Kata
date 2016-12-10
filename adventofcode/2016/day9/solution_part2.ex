@@ -32,7 +32,6 @@ defmodule Solution do
 
   def repeat(tail, acc, marker) do
     [x,y]= String.split(marker,"x")
-    IO.puts String.to_integer(x)
     {r, rest} =tail
     |> String.split_at(String.to_integer(x))
   
@@ -40,6 +39,7 @@ defmodule Solution do
     rep = 0..String.to_integer(y)-1
     |> Enum.reduce("", fn (i, rr) -> r <> rr end)
 
-    acc <> rep <> decomp(rest)
+
+    acc <> decomp(rep <> rest)
   end
 end

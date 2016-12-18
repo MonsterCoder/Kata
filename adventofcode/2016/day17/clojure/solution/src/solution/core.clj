@@ -18,18 +18,18 @@
 
 (defn shortest [[l p] [c pt passcode]]
   (if (> l (.length passcode))
-    (let [[x y](step pt passcode [l p])] (if (> l x) (identity [x y]) (identity [l p])))
-    (identity [l p])))
+    (let [[x y](step pt passcode [l p])] (if (> l x)  [x y]  [l p]))
+    [l p]))
 
 (defn longest [[l p] [c pt passcode]]
-    (let [ [x y] (step2 pt passcode)] (if (>= x l) (identity [x y]) (identity [l p]))))
+    (let [ [x y] (step2 pt passcode)] (if (>= x l)  [x y]  [l p])))
 
 (defn step 
   ([pt passcode] (step pt passcode [99999999 passcode]))
   ([pt passcode best]
     ;;(let [[x y] pt] (println (str "*" x "-" y "*" best " * "  passcode)))
     (if (= pt [3 3])
-      (identity [(.length passcode) passcode])
+      [(.length passcode) passcode]
       ( ->> (md5-hash passcode)
         (map-indexed #(mv %1 %2 pt passcode ))
         (filter valid?)
@@ -39,7 +39,7 @@
 (defn step2 [pt passcode]
     ;;(let [[x y] pt] (println (str "*" x "-" y "*" best " * "  passcode)))
     (if (= pt [3 3])
-      (identity [(.length passcode) passcode])
+      [(.length passcode) passcode]
       ( ->> (md5-hash passcode)
         (map-indexed #(mv %1 %2 pt passcode ))
         (filter valid?)

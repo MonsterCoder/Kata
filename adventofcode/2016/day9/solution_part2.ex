@@ -18,7 +18,8 @@ defmodule Solution do
 
   def decomp(<<41 , tail::binary>>, acc, [marker]) do
    tail
-   |> repeat(acc,marker)
+   |> repeat(acc, marker)
+
   end 
 
   def decomp(<<c , tail::binary>>, acc, [marker]) do
@@ -26,19 +27,22 @@ defmodule Solution do
   end
 
   def decomp(<<c , tail::binary>>, acc) do
-
+    
     decomp(tail, (acc <> <<c>>))
   end
 
-  def repeat(tail, acc, marker) do
+  def repeat(tail,acc, marker) do
     [x,y]= String.split(marker,"x")
     {r, rest} =tail
     |> String.split_at(String.to_integer(x))
+    repeat(acc,r,String.to_integer(y)-1,rest)
+  end
   
-    rep = 0..String.to_integer(y)-1
+  def repeat(acc, r, cnt, rest) do
+
+    rep = 0..cnt
     |> Enum.reduce("", fn (i, rr) -> r <> rr end)
 
-
-    decomp(rep <> rest, acc)
+    decomp(rep<> rest, acc)
   end
 end

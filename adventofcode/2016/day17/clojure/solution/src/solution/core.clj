@@ -21,9 +21,6 @@
     (let [[x y](step pt passcode [l p])] (if (> l x)  [x y]  [l p]))
     [l p]))
 
-(defn longest [[l p] [c pt passcode]]
-    (let [ [x y] (step2 pt passcode)] (if (>= x l)  [x y]  [l p])))
-
 (defn step 
   ([pt passcode] (step pt passcode [99999999 passcode]))
   ([pt passcode best]
@@ -36,12 +33,21 @@
         (#(if (empty? %) [99999999 passcode] (reduce shortest best %)))
       ))))
 
-(defn step2 [pt passcode]
-    ;;(let [[x y] pt] (println (str "*" x "-" y "*" best " * "  passcode)))
-    (if (= pt [3 3])
-      [(.length passcode) passcode]
-      ( ->> (md5-hash passcode)
-        (map-indexed #(mv %1 %2 pt passcode ))
-        (filter valid?)
-        (#(if (empty? %) [0 passcode] (reduce longest [0 ""] % )))
-      )))
+(defn expend [acc [c [x y]  passcode]]
+  (->> (md5-hash passcode)
+       (map-indexed #(mv %1 %2 [x y]  passcode))
+       (filter valid?)
+       (into acc )))
+(defn unfinished [[c [x y] passcode]]
+  (or (< x 3) (< y 3)))
+(defn longer [[l p] [c [x y] passcode]]
+   (if (and (= x 3) (= y 3) (> (.length passcode) l)) [(.length passcode) passcode] [l p]))
+(defn step3 [lst [s path]]
+  (if (empty? lst)
+    [(- s 8) path]
+    (let [[lst acc] ( ->> lst
+          (reduce expend [])
+          (filter valid?)
+          (#(conj [] (filter unfinished %) (reduce longer [s path] %)))
+          )] (recur lst acc) )))
+
